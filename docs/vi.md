@@ -1,3 +1,8 @@
+---
+key: PRODUCT-17449
+title: Network Device Syslog Alerting
+---
+
 # Network Device Syslog Alerting — Value Increment
 
 _Jira: [PRODUCT-17449](https://dynatrace.atlassian.net/browse/PRODUCT-17449)_
