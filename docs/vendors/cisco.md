@@ -1,4 +1,4 @@
-## Cisco IOS System Message Guides:
+# Cisco IOS System Message Guides:
 
 cisco web site:  https://content.cisco.com
 
@@ -11,7 +11,7 @@ Here's a comprehensive reference guide for Cisco syslog messages related to syst
 
 ---
 
-## Cisco Syslog Messages: System Events Reference
+##Cisco Syslog Messages: System Events Reference
 
 ### Message Format
 
@@ -65,3 +65,19 @@ Key crash-related messages:
 
 **1. Cisco Error Message Decoder (EMD)** — the primary lookup tool:
 Copy any error message from your console or syslog and paste it into the tool at **https://www.cisco.com/cgi-bin/Support/Errordecoder/index.cgi**. It returns an explanation, 
+
+# Cisco configuration change traps
+
+ccmHistoryEventCommand
+OID: 1.3.6.1.4.1.9.9.43.2.0.1
+
+
+Another related notification:
+ccmHistoryEventConfigChange
+OID: 1.3.6.1.4.1.9.9.43.2.0.2
+
+
+These traps indicate that:
+
+A configuration command was executed
+The running configuration changed (e.g., via CLI, SNMP, or other methods)
