@@ -105,8 +105,6 @@ These are anomalous conditions that do not impact the business immediately.
 As a developer, SRE, or ITOps practitioner, you want to be aware of these issues, but only during business hours.
 Ideally, these events automatically trigger remediation actions. Warning signals are enabled out-of-the-box and have a “warning” severity.
 
-Given the diversity of network or individual device criticality, the choice between health alerts and warning signal should be left to the end user.
-
 ### Event Catalog
 
 | Feature | Health Alert | Warning Signal | Info | Source | Note |
