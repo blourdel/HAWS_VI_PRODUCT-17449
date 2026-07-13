@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/benoit.lourdelet/OneDrive - Dynatrace/Documents/IM/Network/NwExtensions/Devices/Cisco/4.0.9/**)",
+      "PowerShell(python \"$env:USERPROFILE\\\\.claude\\\\scripts\\\\vi_to_jira.py\" \"docs/vi.md\" \"PRODUCT-17449\" \"main\" \"https://github.com/blourdel/HAWS_VI_PRODUCT-17449/blob/main/docs/vi.md\")"
+    ]
+  }
+}

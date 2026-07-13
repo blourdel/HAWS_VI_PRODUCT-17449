@@ -22,7 +22,6 @@ Additionnaly, but very strongly, the new  OOTB events bring value to the Network
 
 **External:** Friendly customers  (Costo, DXC, SAFRAN ) currently running Dynatrace syslog but getting little value out of it. They have asked specifically for syslog alerting in Dynatrace so they can get more value out of syslog/trap ingestion.
 
-
 ## Target Audience
 
 **Primary — SREs**:  Once an application problem involving service degradation is raised, they look at the attached network events. They make a determination on network innocence.
@@ -107,30 +106,34 @@ Ideally, these events automatically trigger remediation actions. Warning signals
 
 ### Event Catalog
 
-| Feature | Health Alert | Warning Signal | Info | Source | Note |
-| --- | :---: | :---: | :---: | --- | --- |
-| Out-of-Maintenance Shutdown | ✓ | | | syslog | Device ceased offering connectivity service outside a maintenance window — immediate business impact |
-| Power Supply Down | ✓ | | | syslog | Redundant power lost; device at immediate risk of full outage or lower capacity |
-| Routing Engine Down | ✓ | | | syslog | Redundant control plane lost; device at immediate risk of loosing its control plane |
-| Software Crash | ✓ | | | syslog | Device connectivity interrupted or at immediate risk |
-| Fan Down | | ✓ | | syslog | Redundancy degraded but device still operational; risk of thermal shutdown if unaddressed |
-| Out-of-Maintenance Reboot | | ✓ | | syslog | Device was temporarily offline; warrants investigation but service has recovered |
-| CPU, Memory pressure Anomaly | | ✓ | | metric | Resource saturation degrades forwarding and convergence but does not immediately stop service |
-| BGP Neighbor Down | | ✓ | | syslog | Routing session lost; redundant paths typically absorb the impact, but requires investigation |
-| BGP Routing Table Anomaly | | ✓ | | metric | Unusual route churn or table size; no immediate outage but forwarding stability at risk |
-| OSPF Neighbor Down | | ✓ | | syslog | Adjacency lost; traffic may reroute but convergence gap requires attention |
-| EIGRP Neighbor Down | | ✓ | | syslog | Same as OSPF: adjacency loss with expected failover, not an immediate outage |
-| IS-IS Neighbor Down | | ✓ | | syslog | Same as OSPF: adjacency loss with expected failover, not an immediate outage |
-| Interface Contractual Saturation | | ✓ | | metric | Bandwidth threshold exceeded; degraded experience but no connectivity loss |
-| Optical Module Alert or Warning | | ✓ | | syslog/metric | Signal degradation or threshold breach; link may be approaching failure but still operational |
-| HSRP, VRRP failover | | ✓ | | syslog/metric | Gateway redundancy activated; primary path failed but service continues via standby |
-| NTP synch loss | | ✓ | | syslog/metric | Time drift degrades log correlation and cert validation but does not impact packet forwarding |
-| Temperature Anomaly | | ✓ | | metric/syslog | Device running hot; no immediate failure, but thermal shutdown risk if not addressed |
-| Configuration Change | | | ✓ | Syslog, SNMP trap | Intentional or unintentional config edit; no anomaly by itself, recorded for audit and forensics |
-| FRU Change | | | ✓ | syslog | Hardware insertion or removal; normal operational event, relevant for inventory tracking |
-| Planned Reboot | | | ✓ | syslog | Scheduled restart within a maintenance window; expected, no anomaly |
-| Planned Shutdown | | | ✓ | syslog | Scheduled shutdown within a maintenance window; expected, no anomaly |
-| Software Change | | | ✓ | Anomaly detection on property | OS or firmware version change; informational record for change tracking and RCA context |
+Unless explicitely notes, all events are emitted only outside of maintenance windows.
+
+| Name | Type | Health Alert | Warning Signal | Info | Source | Note |
+| --- | :---: | :---: | :---: | :---: | --- | --- |
+| Device Shutdown | Device | ✓ | | | syslog | Device ceased offering connectivity service outside a maintenance window — immediate business impact |
+| Reboot | Device | | ✓ | | syslog | Device was temporarily offline; warrants investigation but service has recovered |
+| Software Crash followed by automatic reboot | Device | ✓ | | | syslog | Device connectivity interrupted or at immediate risk |
+| Planned reboot | Device | | | ✓ | syslog | Scheduled restart within a maintenance window; expected, no anomaly |
+| Planned shutdown | Device | | | ✓ | syslog | Scheduled shutdown within a maintenance window; expected, no anomaly |
+| Routing Engine Down | Device | ✓ | | | syslog | Redundant control plane lost; device at immediate risk of loosing its control plane |
+| Software Change | Device | | | ✓ | Anomaly detection on property | OS or firmware version change; informational record for change tracking and RCA context |
+| Configuration Change | Device | | | ✓ | Syslog, SNMP trap | Intentional or unintentional config edit; no anomaly by itself, recorded for audit and forensics |
+| Power Supply going Down | Device | ✓ | | | syslog | Redundant power lost; device at immediate risk of full outage or lower capacity |
+| Fan Down | Device | | ✓ | | syslog | Redundancy degraded but device still operational; risk of thermal shutdown if unaddressed |
+| FRU Change | Device | | | ✓ | syslog | Hardware insertion or removal; normal operational event, relevant for inventory tracking |
+| Temperature Anomaly | Device | | ✓ | | metric/syslog | Device running hot; no immediate failure, but thermal shutdown risk if not addressed |
+| CPU, Memory pressure Anomaly | Control plane | | ✓ | | metric | Resource saturation degrades forwarding and convergence but does not immediately stop service |
+| BGP Neighbor Down | Control plane | | ✓ | | syslog | Routing session lost; redundant paths typically absorb the impact, but requires investigation |
+| HSRP, VRRP failover | Control plane | | ✓ | | syslog/metric | Gateway redundancy activated; primary path failed but service continues via standby |
+| NTP synch loss | Control plane | | ✓ | | syslog/metric | Time drift degrades log correlation and cert validation but does not impact packet forwarding |
+| BGP Routing Table Anomaly | Control plane | | ✓ | | metric | Unusual route churn or table size; no immediate outage but forwarding stability at risk  |
+| OSPF Neighbor Down | Control plane| | ✓ | | syslog | Adjacency lost; traffic may reroute but convergence gap requires attention |
+| EIGRP Neighbor Down | Control plane | | ✓ | | syslog | Same as OSPF: adjacency loss with expected failover, not an immediate outage |
+| IS-IS Neighbor Down | Control plane | | ✓ | | syslog | Same as OSPF: adjacency loss with expected failover, not an immediate outage |
+| Interface Contractual Saturation | Interface | | ✓ | | metric | Bandwidth threshold exceeded; degraded experience but no connectivity loss |
+| Interface going down from any state | Interface | | ✓ | | metric | Bandwidth threshold exceeded; degraded experience but no connectivity loss |
+| Optical Module Alert or Warning | Interface | | ✓ | | syslog/metric | Signal degradation or threshold breach; link may be approaching failure but still operational |
+
 
 ### Per vendor events
 
